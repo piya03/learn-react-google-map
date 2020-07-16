@@ -18,6 +18,7 @@
 }
 .align_Map_address{
   display: flex;
+  flex-direction: column;
  margin-top: 26px;
   border-radius: 10px;
   padding: 35px;
@@ -28,11 +29,13 @@
 .address_inputs{
   display: flex;
   flex-direction: column;
+  margin-top: 35px;
+
 }
 .address_inputs input{
   outline: none;
     height: 40px;
-    padding: 10px;
+    padding: 5px 10px;
     width: 300px;
     border-radius: 7px;
     border: 1px solid;
@@ -41,7 +44,7 @@
 
 }
 .current_location{
-  margin-bottom: 45px;
+  margin-bottom: 30px;
 
 }
 .icon{
