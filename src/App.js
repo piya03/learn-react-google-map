@@ -1,5 +1,24 @@
 import React from "react";
 import "./App.css";
+import {
+  withScriptjs,
+  GoogleMap,
+  Marker,
+  withGoogleMap,
+} from "react-google-maps";
+
+////////
+const MyMapComponent = withScriptjs(
+  withGoogleMap((props) => (
+    <GoogleMap defaultZoom={8} defaultCenter={{ lat: -34.397, lng: 150.644 }}>
+      {props.isMarkerShown && (
+        <Marker position={{ lat: -34.397, lng: 150.644 }} />
+      )}
+    </GoogleMap>
+  ))
+);
+
+///////
 
 function App() {
   return (
@@ -20,7 +39,15 @@ function App() {
         </div>
 
         <div className="align_Map_address">
-          <div className="map_box">Here Google MAP</div>
+          <div className="map_box">
+            <MyMapComponent
+              isMarkerShown
+              googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+              loadingElement={<div style={{ height: `100%` }} />}
+              containerElement={<div style={{ height: `400px` }} />}
+              mapElement={<div style={{ height: `100%` }} />}
+            />
+          </div>
           <div className="address_inputs">
             <input
               type="text"
