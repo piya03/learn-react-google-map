@@ -6,17 +6,25 @@ import {
   Marker,
   withGoogleMap,
 } from "react-google-maps";
+import { compose, withProps } from "recompose";
 
-////////
-const MyMapComponent = withScriptjs(
-  withGoogleMap((props) => (
-    <GoogleMap defaultZoom={8} defaultCenter={{ lat: -34.397, lng: 150.644 }}>
-      {props.isMarkerShown && (
-        <Marker position={{ lat: -34.397, lng: 150.644 }} />
-      )}
-    </GoogleMap>
-  ))
-);
+const MyMapComponent = compose(
+  withProps({
+    googleMapURL:
+      "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places",
+    loadingElement: <div style={{ height: `100%` }} />,
+    containerElement: <div style={{ height: `400px` }} />,
+    mapElement: <div style={{ height: `100%` }} />,
+  }),
+  withScriptjs,
+  withGoogleMap
+)((props) => (
+  <GoogleMap defaultZoom={8} defaultCenter={{ lat: -34.397, lng: 150.644 }}>
+    {props.isMarkerShown && (
+      <Marker position={{ lat: -34.397, lng: 150.644 }} />
+    )}
+  </GoogleMap>
+));
 
 ///////
 
@@ -34,19 +42,13 @@ function App() {
             placeholder="Search Your Location"
           />
           <span className="icon">
-            <i class="fa fa-search"></i>
+            <i className="fa fa-search"></i>
           </span>
         </div>
 
         <div className="align_Map_address">
           <div className="map_box">
-            <MyMapComponent
-              isMarkerShown
-              googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
-              loadingElement={<div style={{ height: `100%` }} />}
-              containerElement={<div style={{ height: `400px` }} />}
-              mapElement={<div style={{ height: `100%` }} />}
-            />
+            <MyMapComponent isMarkerShown />
           </div>
           <div className="address_inputs">
             <input
