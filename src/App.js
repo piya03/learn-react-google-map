@@ -7,6 +7,11 @@ import {
   withGoogleMap,
 } from "react-google-maps";
 import { compose, withProps } from "recompose";
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng,
+} from "react-places-autocomplete";
 
 const MyMapComponent = compose(
   withProps({
