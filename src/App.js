@@ -34,6 +34,8 @@ const MyMapComponent = compose(
 ///////
 function App() {
   const [addressOption, setAddressOption] = useState([]);
+  const [selectVal, setSelectVal] = useState({ value: "Select" });
+  console.log("Appfff -> selectVal", selectVal.value);
   console.log("App -> addressOption", addressOption);
 
   async function onChange(e) {
@@ -42,10 +44,7 @@ function App() {
 
     if (value.length > 3) {
       const res = await fetch(url).then((res) => res.json());
-      // res.map((each) => {
-      //   console.log("onChange -> each", each.address.name);
-      //   setAddressOption.push(...addressOption, each.address.name);
-      // });
+
       setAddressOption(res);
       console.log(res);
     }
@@ -77,6 +76,23 @@ function App() {
           </span>
         </div>
 
+        {/* /////////// */}
+        <select
+          value={selectVal.value}
+          onChange={(e) => {
+            console.log("App -> e", e);
+            setSelectVal({ value: e.target.value });
+          }}
+        >
+          {addressOption.map((each, i) => {
+            return (
+              <option key={i} value={each.display_address}>
+                {each.display_address}
+              </option>
+            );
+          })}
+        </select>
+        {/* ////////// */}
         <div className="align_Map_address">
           <div className="map_box">
             <MyMapComponent isMarkerShown />
