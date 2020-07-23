@@ -9,6 +9,8 @@
   padding: 15px;
     width: 400px;
     border-radius: 6px;
+    padding-right: 45px;
+
 }
 .map_box{
   width: 400px;
@@ -52,4 +54,16 @@
   left: -40px;
   font-size: 25px;
   color: #14aac0;
+}
+ul{
+  max-width: 450px;
+  padding: 0;
+}
+ul li {
+  list-style: none;
+  padding: 10px 0px;
+  cursor: pointer;
+}
+ul li:hover{
+  background-color: #f3f3f3;
 }

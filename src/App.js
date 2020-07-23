@@ -34,9 +34,11 @@ const MyMapComponent = compose(
 ///////
 function App() {
   const [addressOption, setAddressOption] = useState([]);
-  const [selectVal, setSelectVal] = useState({ value: "Select" });
-  console.log("Appfff -> selectVal", selectVal.value);
-  console.log("App -> addressOption", addressOption);
+  const [inputVal, setInputVal] = useState("");
+  const [pincode, setPincode] = useState();
+  const [show, setShow] = useState(true);
+  const [latitude, setLatitude] = useState();
+  const [longitude, setLongitude] = useState();
 
   async function onChange(e) {
     const { value } = e.target;
@@ -46,17 +48,21 @@ function App() {
       const res = await fetch(url).then((res) => res.json());
 
       setAddressOption(res);
-      console.log(res);
     }
   }
 
-  const optionSelect = addressOption.map((each) => {
+  const optionSelect = addressOption?.map((each) => {
     return {
       label: each?.display_name || "",
       value: each?.place_id,
       ...each,
     };
   });
+
+  const save = optionSelect.map((each, i) => {
+    return setLatitude(each?.lat), setLongitude(each?.lon);
+  });
+  console.log("App -> save", save);
   console.log("App -> optionSelect", optionSelect);
   return (
     <div className="App">
@@ -69,7 +75,12 @@ function App() {
             type="text"
             className="searchBox"
             placeholder="Search Your Location"
-            onChange={onChange}
+            onChange={(e) => {
+              onChange(e);
+              setShow(true);
+              setInputVal(e.target.value);
+            }}
+            value={inputVal}
           />
           <span className="icon">
             <i className="fa fa-search"></i>
@@ -77,33 +88,44 @@ function App() {
         </div>
 
         {/* /////////// */}
-        <select
-          value={selectVal.value}
-          onChange={(e) => {
-            console.log("App -> e", e);
-            setSelectVal({ value: e.target.value });
-          }}
-        >
-          {addressOption.map((each, i) => {
-            return (
-              <option key={i} value={each.display_address}>
-                {each.display_address}
-              </option>
-            );
-          })}
-        </select>
-        {/* ////////// */}
+        {show && (
+          <ul
+            onClick={(e) => {
+              setShow(false);
+              setInputVal(e.target.innerText);
+            }}
+          >
+            {optionSelect.map((each, i) => {
+              return (
+                <li key={i} value={each.value}>
+                  {each.label}
+                </li>
+              );
+            })}
+          </ul>
+        )}
+
         <div className="align_Map_address">
           <div className="map_box">
-            <MyMapComponent isMarkerShown />
+            <MyMapComponent
+              isMarkerShown
+              latitude={latitude}
+              longitude={longitude}
+            />
           </div>
           <div className="address_inputs">
+            <textarea
+              className="current_location"
+              value={inputVal}
+              placeholder="Current Location"
+              rows={5}
+            />
             <input
               type="text"
-              placeholder="Current Location"
-              className="current_location"
+              placeholder="Pincode"
+              value={pincode}
+              onChange={(e) => setPincode(e.target.value)}
             />
-            <input type="text" placeholder="Pincode" />
           </div>
         </div>
       </div>
@@ -112,53 +134,3 @@ function App() {
 }
 
 export default App;
-
-/**
- *   <PlacesAutocomplete
-            value={inputAddress.address}
-            onChange={handleChange}
-            onSelect={handleSelect}
-          >
-            {({
-              getInputProps,
-              suggestions,
-
-              getSuggestionItemProps,
-              loading,
-            }) => {
-              console.log("App -> suggestions", suggestions);
-              return (
-                <div>
-                  <input
-                    {...getInputProps({
-                      placeholder: "Search Places ...",
-                      className: "location-search-input",
-                    })}
-                  />
-                  <div className="autocomplete-dropdown-container">
-                    {loading && <div>Loading...</div>}
-                    {suggestions.map((suggestion) => {
-                      const className = suggestion.active
-                        ? "suggestion-item--active"
-                        : "suggestion-item";
-                      // inline style for demonstration purpose
-                      const style = suggestion.active
-                        ? { backgroundColor: "#fafafa", cursor: "pointer" }
-                        : { backgroundColor: "#ffffff", cursor: "pointer" };
-                      return (
-                        <div
-                          {...getSuggestionItemProps(suggestion, {
-                            className,
-                            style,
-                          })}
-                        >
-                          <span>{suggestion.description}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            }}
-          </PlacesAutocomplete>
- */
