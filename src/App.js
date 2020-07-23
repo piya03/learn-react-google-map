@@ -59,16 +59,12 @@ function App() {
     };
   });
 
-  const save = optionSelect.map((each, i) => {
-    return setLatitude(each?.lat), setLongitude(each?.lon);
-  });
-  console.log("App -> save", save);
+  // const save = optionSelect.map((each, i) => {
+  //   return setLatitude(each?.lat), setLongitude(each?.lon);
+  // });
   console.log("App -> optionSelect", optionSelect);
   return (
     <div className="App">
-      <div className="">
-        <button>Open Google Map</button>
-      </div>
       <div className="container">
         <div>
           <input
