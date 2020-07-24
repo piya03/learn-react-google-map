@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  position: relative;
 }
 .searchBox{
   outline: none;
@@ -58,11 +59,24 @@
 ul{
   max-width: 450px;
   padding: 0;
+
+  box-shadow: 0px 0px 3px;
+  border-radius: 5px;
+  padding: 10px 20px;
+  position: absolute;
+  z-index: 1;
+  background: white;
+  top: 45px;
+
 }
 ul li {
   list-style: none;
   padding: 10px 0px;
   cursor: pointer;
+box-shadow: 0px 0px 3px;
+  border-radius: 5px;
+  padding: 10px 20px;
+
 }
 ul li:hover{
   background-color: #f3f3f3;
