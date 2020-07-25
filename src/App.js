@@ -61,8 +61,6 @@ function App() {
 
   useEffect(() => {
     console.log("ref", myRef.current);
-
-    // ref.current.setCenter("");
   }, []);
   const optionSelect = (addressOption || [])?.map((each) => {
     return {
@@ -76,51 +74,56 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <div>
-          <input
-            type="text"
-            className="searchBox"
-            placeholder="Search Your Location"
-            onChange={(e) => {
-              onChange(e);
-              setShow(true);
-              setInputVal(e.target.value);
-            }}
-            value={inputVal}
-          />
-          <span className="icon">
-            <i className="fa fa-search"></i>
-          </span>
+        <div
+          style={{
+            position: "relative",
+          }}
+        >
+          <div>
+            <input
+              type="text"
+              className="searchBox"
+              placeholder="Search Your Location"
+              onChange={(e) => {
+                onChange(e);
+                setShow(true);
+                setInputVal(e.target.value);
+              }}
+              value={inputVal}
+            />
+            <span className="icon">
+              <i className="fa fa-search"></i>
+            </span>
+          </div>
+          {show && (
+            <ul>
+              {optionSelect.map((each, i) => {
+                return (
+                  <li
+                    onClick={(e) => {
+                      setShow(false);
+                      setSelectedValue(each);
+                      setInputVal(each?.display_name);
+                      // if (each) {
+                      //   console.log("App -> selectedValue", selectedValue);
+                      //   myRef.current.setCenter(
+                      //     window.google.maps.LatLng(
+                      //       parseInt(each?.lat),
+                      //       parseInt(each?.lon)
+                      //     )
+                      //   );
+                      // }
+                    }}
+                    key={i}
+                    value={each.value}
+                  >
+                    {each.label}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </div>
-        {show && (
-          <ul>
-            {optionSelect.map((each, i) => {
-              return (
-                <li
-                  onClick={(e) => {
-                    setShow(false);
-                    setSelectedValue(each);
-                    setInputVal(each?.display_name);
-                    // if (each) {
-                    //   console.log("App -> selectedValue", selectedValue);
-                    //   myRef.current.setCenter(
-                    //     window.google.maps.LatLng(
-                    //       parseInt(each?.lat),
-                    //       parseInt(each?.lon)
-                    //     )
-                    //   );
-                    // }
-                  }}
-                  key={i}
-                  value={each.value}
-                >
-                  {each.label}
-                </li>
-              );
-            })}
-          </ul>
-        )}
-
         <div className="align_Map_address">
           <div className="map_box">
             <MyMapComponent
